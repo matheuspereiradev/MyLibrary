@@ -48,7 +48,7 @@
                         </div>
                         <div class="panel-body">
 
-                            <form action="#" method="post">
+                            <form action="../classesPhp/login.php" method="post">
                                 <label for="login">Login: </label>
                                 <br>
                                 <input type="text" name="login" id="login" placeholder="login" class="form-control" autofocus>
