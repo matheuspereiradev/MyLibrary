@@ -12,6 +12,8 @@ if (empty($login) || empty($senha)) {
     exit;
 }
 
+// cria o hash da senha
+//$senhaHash = make_hash($senha);
 
 $PDO = db_connect();
 
@@ -43,4 +45,4 @@ $_SESSION['logged_in'] = true;
 $_SESSION['id_usr'] = $user['id_usr'];
 $_SESSION['nome'] = $user['nome'];
 
-header('Location: #.php');
+header('Location: ../telas/home.php');
