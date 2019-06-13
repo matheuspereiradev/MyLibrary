@@ -158,7 +158,7 @@ $totallendo = $stmt_count_lendo->fetchColumn();
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-group"></i> Amigos</a>
+                            <a href="form-listaramigo.php"><i class="fa fa-group"></i> Amigos</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-bookmark"></i> Status de leitura</a>
