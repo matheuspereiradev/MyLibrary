@@ -18,7 +18,7 @@ if (empty($idLivro)) {
 $PDO = db_connect();
 $sql = "DELETE FROM livro WHERE idLivro = :idLivro";
 $stmt = $PDO->prepare($sql);
-$stmt->bindParam(':idlivro', $idlivro, PDO::PARAM_INT);
+$stmt->bindParam(':idLivro', $idLivro, PDO::PARAM_INT);
 
 
 if ($stmt->execute()) {
