@@ -8,12 +8,14 @@ require '../genericos/check.php';
 $PDO = db_connect();
 $id_usr = $_SESSION['id_usr'];
 
-$sqllista = "SELECT * FROM amigo where Usuario_id_usr = :id_usr ORDER BY nome ASC";
+//lvro
+
+$sqllista = "SELECT * FROM livro where Usuario_id_usr = :id_usr ORDER BY nome ASC";
 $stmtlista = $PDO->prepare($sqllista);
 $stmtlista->bindParam(':id_usr', $id_usr);
 $stmtlista->execute();
 
-$sql_counta_total = "SELECT COUNT(*) AS total FROM amigo WHERE Usuario_id_usr= :id_usr ORDER BY nome ASC ";
+$sql_counta_total = "SELECT COUNT(*) AS total FROM livro WHERE Usuario_id_usr= :id_usr ORDER BY nome ASC ";
 $stmt_counta_total = $PDO->prepare($sql_counta_total);
 $stmt_counta_total->bindParam(':id_usr', $id_usr);
 $stmt_counta_total->execute();
@@ -74,7 +76,7 @@ $total = $stmt_counta_total->fetchColumn();
                                 <i class="fa fa-user fa-fw"></i> Conta <i class="fa fa-caret-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li>
+<li>
                                     <form action="form-edit.php" method="post" id="config">
                                         <input type="hidden" name="id_usr" value="<?php echo $_SESSION['id_usr'] ?>">
                                         <center><a href="#" style="text-decoration:none" onClick="document.getElementById('config').submit();"><i class="fa fa-cog"></i> Configurações</a></center>
@@ -92,7 +94,7 @@ $total = $stmt_counta_total->fetchColumn();
                     </ul>
                 </div>
             </nav>
-            <!-- /.navbar-header -->
+            <!-- /.navbar-header -->          
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation" style="margin-top: 0">
@@ -134,13 +136,14 @@ $total = $stmt_counta_total->fetchColumn();
             <!-- /.navbar-static-side -->
         </nav>
 
-        <!--conteudo-->
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Seus amigos</h1>
-                        <a href="form-add-amigo.php" style="text-decoration:none"><button type="button" class="btn btn-success btn-lg btn-block" ><span class="fa fa-plus-circle"></span> Adicionar novo amigo</button></a>
+                        <h1 class="page-header">Sua biblioteca</h1>
+                        <!--conteudo-->
+
+                        <a href="form-add-livro.php" style="text-decoration:none"><button type="button" class="btn btn-success btn-lg btn-block" ><span class="fa fa-plus-circle"></span> Adicionar novo livro</button></a>
                         <br>
 
                         <?php if ($total > 0): ?>
@@ -148,38 +151,64 @@ $total = $stmt_counta_total->fetchColumn();
                                 <thead>
                                     <tr>
                                         <th>Nome</th>
-                                        <th>Telefone</th>
+                                        <th>Autor</th>
+                                        <th>Data de cadastro</th>
+                                        <th>Status de emprestimo</th>
+                                        <th>statusLeitura</th>
                                         <th>Editar</th>
                                         <th>Excluir</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    <?php while ($amigo = $stmtlista->fetch(PDO::FETCH_ASSOC)): ?>
+                                    <?php while ($livro = $stmtlista->fetch(PDO::FETCH_ASSOC)): ?>
                                         <tr class="even gradeC">
-                                            <td><?php echo $amigo['nome'] ?></td>
-
+                                            <td><?php echo $livro['nome'] ?></td>
+                                            <td><?php echo $livro['autor'] ?></td>
+                                            <td><?php echo dateConvert($livro['data']); ?></td>
                                             <td><?php
-                                                if ($amigo['telefone'] == 0) {
-                                                    echo "Não cadastrado";
+                                                if ($livro['statusEmprestimo'] == 0) {
+                                                    echo "Não emprestado";
                                                 } else {
-                                                    echo $amigo['telefone'];
+                                                    echo "Emprestado";
                                                 }
-                                                ?>
-                                            </td>
+                                                ?></td>
+                                            <!--STATUS DE LEITURA DEVE SER IGUAL AO CADSATRO-->
+                                            <td><?php
+                                                if ($livro['statusLeitura'] == 1) {
+                                                    echo "Não lido";
+                                                } elseif ($livro['statusLeitura'] == 2) {
+                                                    echo "Lendo";
+                                                } else {
+                                                    echo "Lido";
+                                                }
+                                                ?></td>
 
                                             <td>
-                                                <form action="form-edit-amigo.php" method="post">
-                                                    <input type="hidden" name="idAmigo" value="<?php echo $amigo['idAmigo'] ?>">
+                                                <form action="../telas/form-edit-livro.php" method="post">
+                                                    <input type="hidden" name="idLivro" value="<?php echo $livro['idLivro'] ?>">
                                                     <button type="submit" class="btn btn-primary btn-block"><span class=" fa fa-pencil fa-2x"></span></button>
+                                                   <!-- <input type="submit" class="btn btn-danger btn-block"  value=" fa fa-trash-o fa-2x">-->
                                                 </form>
+
                                             </td>
                                             <td>
-                                                <form action="../classesPhp/deleteAmigo.php" method="post">
-                                                    <input type="hidden" name="idAmigo" value="<?php echo $amigo['idAmigo'] ?>">
-                                                    <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Tem certeza de que deseja remover <?php echo $amigo['nome'] ?> dos seus amigos?');"><span class=" fa fa-trash-o fa-2x"></span></button>
-                                                </form>
+                                                <?php if ($livro['statusEmprestimo'] == 0): ?>
+                                                    <form action="../classesPhp/deleteLivro.php" method="post">
+                                                        <input type="hidden" name="idLivro" value="<?php echo $livro['idLivro'] ?>">
+                                                        <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Tem certeza de que deseja remover <?php echo $livro['nome'] ?> da sua biblioteca?');"><span class=" fa fa-trash-o fa-2x"></span></button>
+                                                       <!-- <input type="submit" class="btn btn-danger btn-block"  value=" fa fa-trash-o fa-2x">-->
+                                                    </form>
+                                                <?php else: ?>
+                                                    <script>
+                                                        function alerta() {
+                                                            alert("Este livro tem um cadastro de emprestimo ativo e não é possivel excluir um livro que está emprestado, REALIZE A DEVOLUÇÃO E TENTE NOVAMENTE");
+                                                        }
+                                                    </script>
+                                                    <button type="button" class="btn btn-danger btn-block disabled" onclick="alerta()"><span class=" fa fa-trash-o fa-2x"></span></button>
+                                                    <?php endif ?>
                                             </td>
+
                                         </tr>
                                     <?php endwhile; ?>
 
@@ -187,10 +216,13 @@ $total = $stmt_counta_total->fetchColumn();
                             </table>
                         <?php else: ?>
 
-                            <p>Você ainda não adicionou nenhum amigo</p>
+                            <p>Você ainda não adicionou nenhum livro à sua biblioteca</p>
 
                         <?php endif; ?>
 
+
+
+                        <!--fim do conteudo-->
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -199,6 +231,7 @@ $total = $stmt_counta_total->fetchColumn();
             <!-- /.container-fluid -->
         </div>
 
+        <!--ligações-->
         <!-- jQuery -->
         <script src="<?php echo ('../front/vendor/jquery/jquery.min.js'); ?>"></script>
 
@@ -222,18 +255,17 @@ $total = $stmt_counta_total->fetchColumn();
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-                                                $(document).ready(function() {
-                                                    $('#dataTables-example').DataTable({
-                                                        "language": {
-                                                            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
-                                                                    //responsive: true
-                                                        }
-                                                    });
-                                                });
-
-        </script>
+    $(document).ready(function() {
+    $('#dataTables-example').DataTable( {
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+            //responsive: true
+        }
+    } );
+} );
+    
+</script>
 
 </body>
 
 </html>
-

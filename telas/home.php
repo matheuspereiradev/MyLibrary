@@ -142,17 +142,17 @@ $totallendo = $stmt_count_lendo->fetchColumn();
                             <a href="home.php"><i class="fa fa-home"></i> Home</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-book"></i> Meus Livros</a>
+                            <a href="form-listarlivro.php"><i class="fa fa-book"></i> Meus Livros</a>
                         </li>
 
                         <li>
                             <a href="#"><i class="fa fa-quote-left"></i> Emprestimos<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Emprestar</a>
+                                    <a href="form-emprestimo.php">Emprestar</a>
                                 </li>
                                 <li>
-                                    <a href="#">Devolução</a>
+                                    <a href="form-devolucao.php">Devolução</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -161,7 +161,7 @@ $totallendo = $stmt_count_lendo->fetchColumn();
                             <a href="form-listaramigo.php"><i class="fa fa-group"></i> Amigos</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bookmark"></i> Status de leitura</a>
+                            <a href="form-mudarstatus.php"><i class="fa fa-bookmark"></i> Status de leitura</a>
                         </li>
 
 
@@ -193,7 +193,7 @@ $totallendo = $stmt_count_lendo->fetchColumn();
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="#">
+                                    <a href="form-listarlivro.php">
                                         <div class="panel-footer">
                                             <span class="pull-left">Ver lista</span>
                                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -217,7 +217,7 @@ $totallendo = $stmt_count_lendo->fetchColumn();
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="#">
+                                    <a href="form-infobook.php">
                                         <div class="panel-footer">
                                             <span class="pull-left">Ver listas</span>
                                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -240,7 +240,7 @@ $totallendo = $stmt_count_lendo->fetchColumn();
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="#">
+                                    <a href="form-infobook.php">
                                         <div class="panel-footer">
                                             <span class="pull-left">Ver listas</span>
                                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -262,7 +262,7 @@ $totallendo = $stmt_count_lendo->fetchColumn();
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="#">
+                                    <a href="form-infobook.php">
                                         <div class="panel-footer">
                                             <span class="pull-left">Ver listas</span>
                                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
