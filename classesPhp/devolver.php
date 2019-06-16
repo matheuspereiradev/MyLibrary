@@ -8,7 +8,6 @@ $codEmprestimo = isset($_POST['codEmprestimo']) ? $_POST['codEmprestimo'] : null
 //$dataDev = getData();
 // validação (bem simples, só pra evitar dados vazios)
 if (empty($idLivro) || empty($codEmprestimo)) {
-
     echo "Id inválido";
     exit;
 }
