@@ -18,8 +18,13 @@ $PDO = db_connect();
 $sql = "DELETE FROM emprestimo WHERE codEmprestimo = :codEmprestimo ";
 $stmt = $PDO->prepare($sql);
 $stmt->bindParam(':codEmprestimo', $codEmprestimo);
-//$stmt->bindParam(':dataDev', $dataDev);
 
+
+
+//atualizar o campo em livro
+$sqlAtualizar = "UPDATE livro set statusEmprestimo = 0 where idLivro = :idLivro";
+$stmtAtualizar = $PDO->prepare($sqlAtualizar);
+$stmtAtualizar->bindParam(':idLivro', $idLivro);
 
 
 
